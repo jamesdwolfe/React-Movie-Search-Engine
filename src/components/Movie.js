@@ -3,12 +3,12 @@ import {Link} from 'react-router-dom'
 import DefaultImage from '../default_film_logo.jpg'
 
 const Movie = ({
+    media,
     average,
     backdrop,
     count,
     date,
     id,
-    overview,
     poster,
     title
 }) => {
@@ -18,9 +18,9 @@ const Movie = ({
                 <img
                     src={(()=>{
                         if(backdrop){
-                            return `https://image.tmdb.org/t/p/original/${backdrop}`
+                            return `https://image.tmdb.org/t/p/original${backdrop}`
                         } else if (poster) {
-                            return `https://image.tmdb.org/t/p/original/${poster}`
+                            return `https://image.tmdb.org/t/p/original${poster}`
                         } else {
                             return DefaultImage
                         }
@@ -31,7 +31,7 @@ const Movie = ({
                     })}
                     alt={title}/>
                 <div className="movie-footer">
-                    <h4>{title}</h4>
+                    <h4>{title} {media==="tv" ? "(TV)" : "(Movie)"}</h4>
                     {(() => {
                         if(!count || !average){
                             return <span className="bad">No reviews</span>
@@ -50,8 +50,9 @@ const Movie = ({
                     })()}
 
                     {(()=>{
+                        let startDate = new Date(date);
                         if(date){
-                            return <p>Release date: {new Date(date).toLocaleDateString([], {
+                            return <p>Release date: {new Date(startDate.getTime()+Math.abs(startDate.getTimezoneOffset()*60000)).toLocaleDateString([], {
                                 year: 'numeric',
                                 month: 'long',
                                 day: 'numeric'
@@ -61,7 +62,7 @@ const Movie = ({
                         }
                     })()}
                     
-                    <Link to={`/movie/${id}`} className="btn btn-primary">More Info</Link>
+                    <Link to={`/show/${media}/${id}`} className="btn btn-primary">More Info</Link>
                 </div>
             </div>
         </article>

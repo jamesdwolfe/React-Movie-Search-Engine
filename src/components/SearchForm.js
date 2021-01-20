@@ -21,7 +21,7 @@ const SearchForm = () => {
         <section className="section search">
             <form className="search-form" onSubmit={handleSubmit}>
                 <div className="form-control">
-                    <label htmlFor="name">Search for movies</label>
+                    <label htmlFor="name">Search For Shows</label>
                     <input type="text" id="name" ref={searchValue} onChange={searchMovie}></input>
                 </div>
             </form>

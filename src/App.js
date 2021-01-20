@@ -21,7 +21,7 @@ function App() {
             <About/>
           </Route>
           
-          <Route path="/movie/:id">
+          <Route path="/show/:media/:id">
             <SingleMovie/>
           </Route>
 

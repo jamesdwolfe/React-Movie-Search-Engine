@@ -21,7 +21,11 @@ const MovieList = () => {
 
             <div className="movies-center">
                 {movies.map((item) => {
-                    return <Movie key={item.id} {...item}/>
+                    if(item){
+                        return <Movie key={item.id} {...item}/>
+                    } else {
+                        return ''
+                    }
                 })}
             </div>
         </section>
