@@ -16,19 +16,27 @@ const Movie = ({
         <article className="movie">
             <div className="img-container">
                 <img
-                    src={`https://image.tmdb.org/t/p/original/${backdrop}`}
+                    src={(()=>{
+                        if(backdrop){
+                            return `https://image.tmdb.org/t/p/original/${backdrop}`
+                        } else if (poster) {
+                            return `https://image.tmdb.org/t/p/original/${poster}`
+                        } else {
+                            return DefaultImage
+                        }
+                    })()}
                     onError={((e) => {
                         e.target.onerror=null;
-                        if(poster===null){
-                            e.target.src=DefaultImage;
-                        } else {
-                            e.target.src=`https://image.tmdb.org/t/p/original/${poster}`;
-                        }
+                        e.target.src=DefaultImage;
                     })}
                     alt={title}/>
                 <div className="movie-footer">
                     <h4>{title}</h4>
                     {(() => {
+                        if(!count || !average){
+                            return <span className="bad">No reviews</span>
+                        }
+
                         if (average >= 7) {
                             return <h4>
                                 <span className="good">{average}</span>/10 with {count} reviews</h4>
@@ -41,11 +49,18 @@ const Movie = ({
                         }
                     })()}
 
-                    <p>Release date: {new Date(date).toLocaleDateString([], {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric'
-                        })}</p>
+                    {(()=>{
+                        if(date){
+                            return <p>Release date: {new Date(date).toLocaleDateString([], {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric'
+                            })}</p>
+                        } else {
+                            return <p>Release date: Unknown</p>
+                        }
+                    })()}
+                    
                     <Link to={`/movie/${id}`} className="btn btn-primary">More Info</Link>
                 </div>
             </div>

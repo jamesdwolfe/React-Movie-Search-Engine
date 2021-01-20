@@ -93,18 +93,24 @@ const SingleMovie = () => {
             </h2>
             <div className="film">
                 <img
-                    src={`https://image.tmdb.org/t/p/original/${poster}`}
+                    src={(()=>{
+                        if(poster){
+                            return `https://image.tmdb.org/t/p/original/${poster}`
+                        } else if (backdrop) {
+                            return `https://image.tmdb.org/t/p/original/${backdrop}`
+                        } else {
+                            return DefaultImage
+                        }
+                    })()}
                     onError={((e) => {
-                    e.target.onerror = null;
-                    if (poster === null) {
-                        e.target.src = DefaultImage;
-                    } else {
-                        e.target.src = `https://image.tmdb.org/t/p/original/${backdrop}`;
-                    }
-                })}
+                        e.target.onerror=null;
+                        e.target.src=DefaultImage;
+                    })}
                     alt={title}/>
                 <div className="film-info">
+
                     {(() => {
+                        if(!average) return; 
                         if (average >= 7) {
                             return <p>
                                 <span className="film-data">Reviews:</span>
@@ -119,26 +125,48 @@ const SingleMovie = () => {
                                 <span className="bad">{average}</span>/10 with {count} reviews</p>
                         }
                     })()}
-                    <p><span className="film-data">Release date:</span>{new Date(date).toLocaleDateString([], {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric'
-                        })}</p>
-                    <p><span className="film-data">Description:</span>{overview}</p>
-                    <p><span className="film-data">Genres:</span>{genres.map((item, i) => {
-                            if (genres.length === i + 1) {
-                                return item.name;
-                            } else {
-                                return item.name + ", ";
 
-                            }
-                        })}</p>
-                    <p><span className="film-data">Runtime:</span>{runtime} minutes</p>
+                    {(()=>{
+                        if(date){
+                            return <p><span className="film-data">Release date:</span>{new Date(date).toLocaleDateString([], {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric'
+                            })}</p>
+                        }
+                    })()}
+
+                    {(()=>{
+                        if(overview){
+                            return <p><span className="film-data">Description:</span>{overview}</p>
+                        }
+                    })()}
+
+                    {(()=>{
+                        if(genres.length>0){
+                            return <p><span className="film-data">Genres:</span>{genres.map((item, i) => {
+                                if (genres.length === i + 1) {
+                                    return item.name;
+                                } else {
+                                    return item.name + ", ";
+
+                                }
+                            })}</p>
+                        }
+                    })()}
+
+                    {(()=>{
+                        if(runtime){
+                            return <p><span className="film-data">Runtime:</span>{runtime} minutes</p>
+                        }
+                    })()}
+
                     {(()=>{
                       if(budget>0){
                         return <p><span className="film-data">Budget:</span>{currencyFormat(budget)}</p>
                       }
                     })()}
+
                 </div>
             </div>
 
