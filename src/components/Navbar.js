@@ -10,7 +10,7 @@ const Navbar = () => {
       <div className="nav-center">
         
         <Link to="/">
-          <h2><FontAwesomeIcon icon={faFilm}/> Movie Finder</h2>
+        <h2><FontAwesomeIcon icon={faFilm}/> Movie Finder</h2>
         </Link>
 
         <ul className="nav-links">

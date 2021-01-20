@@ -133,6 +133,7 @@ img {
 }
 .nav-center h2{
   margin-bottom: 0;
+  white-space: nowrap;
 }
 .nav-links {
   display: flex;
