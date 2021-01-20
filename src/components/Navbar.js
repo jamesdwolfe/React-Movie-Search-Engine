@@ -8,15 +8,15 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="nav-center">
-        
+
         <Link to="/">
         <h2><FontAwesomeIcon icon={faFilm}/> Movie Finder</h2>
         </Link>
 
         <ul className="nav-links">
-          <li>
+          {/* <li>
             <Link to="/">Home</Link>
-          </li>
+          </li> */}
           <li>
             <Link to="/about">About</Link>
           </li>
